@@ -25,7 +25,7 @@ void print_book(const OrderBook& book)
               << "ASK\n"
               << "Price      Quantity\n";
 
-    for (const auto& it : book.sp_mp) {
+    for (const auto& it : book.asks()) {
         for (const auto& order : it.second) {
             std::cout << std::setw(5) << order.price << "      " << order.quantity << "\n";
         }
@@ -35,7 +35,8 @@ void print_book(const OrderBook& book)
               << "BID\n"
               << "Price      Quantity\n";
     
-    for (auto it = book.bp_mp.rbegin(); it != book.bp_mp.rend(); ++it) {
+    const auto& bids = book.bids();
+    for (auto it = bids.rbegin(); it != bids.rend(); ++it) {
         for (const auto& order : it->second) {
             std::cout << std::setw(5) << order.price << "      " << order.quantity << "\n";
         }
