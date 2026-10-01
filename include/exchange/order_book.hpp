@@ -16,7 +16,7 @@ public:
 
     OrderBook();
 
-    void add_order(Order od);
+    void add_order(const Order& od);
     bool remove_order(u64 od_id);
 
     u32 best_bid() const;

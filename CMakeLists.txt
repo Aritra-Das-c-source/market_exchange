@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 project(market_exchange)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 set(EXCHANGE_LIB_NAME "exchange")
 set(CLI_EXE_NAME "exchange_cli")
 

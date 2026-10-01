@@ -1,11 +1,13 @@
 #include "cli.hpp"
 
-std::string side_to_str(Side side) {
+std::string side_to_str(Side side)
+{
     if (side == Side::BUY) return "BUY";
     return "SELL";
 }
 
-void print_trades(const std::vector<Trade>& trades) {
+void print_trades(const std::vector<Trade>& trades)
+{
     for (const auto& trade : trades) {
         std::cout << "Trade:\n"
                   << "  trade_id: " << trade.trade_id << "\n"
@@ -17,7 +19,8 @@ void print_trades(const std::vector<Trade>& trades) {
     }
 }
 
-void print_book(const OrderBook& book) {
+void print_book(const OrderBook& book)
+{
     std::cout << "========== ORDER BOOK ==========\n\n"
               << "ASK\n"
               << "Price      Quantity\n";
@@ -33,7 +36,7 @@ void print_book(const OrderBook& book) {
               << "Price      Quantity\n";
     
     for (auto it = book.bp_mp.rbegin(); it != book.bp_mp.rend(); ++it) {
-        for (const auto order : it->second) {
+        for (const auto& order : it->second) {
             std::cout << std::setw(5) << order.price << "      " << order.quantity << "\n";
         }
     }
@@ -85,7 +88,8 @@ Command parse_command(const std::string& line)
     else return {CommandType::UNKNOWN, od};
 };
 
-void run_command(Command& cmd, MatchingEngine& ME) {
+void run_command(const Command& cmd, MatchingEngine& ME)
+{
     switch (cmd.type) {
 
     case CommandType::ADD: {

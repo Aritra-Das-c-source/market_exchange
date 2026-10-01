@@ -1,16 +1,18 @@
-#include "../include/exchange/matching_engine.hpp"
+#include <exchange/matching_engine.hpp>
 
 MatchingEngine::MatchingEngine() {
     book_ = OrderBook();
-    next_order_id = 0;
-    next_trade_id = 0;
+    next_order_id = 1;
+    next_trade_id = 1;
 }
 
-const OrderBook& MatchingEngine::book() const {
+const OrderBook& MatchingEngine::book() const
+{
     return book_;
 }
 
-SubmitResult MatchingEngine::submit_order(Order od) {
+SubmitResult MatchingEngine::submit_order(Order od)
+{
     SubmitResult sr;
     od.order_id = sr.order_id = next_order_id++;
     sr.remaining_quantity = od.quantity;
@@ -64,6 +66,7 @@ SubmitResult MatchingEngine::submit_order(Order od) {
     return sr;
 }
 
-bool MatchingEngine::cancel_order(u64 od_id) {
+bool MatchingEngine::cancel_order(u64 od_id)
+{
     return book_.remove_order(od_id);
 }

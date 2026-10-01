@@ -1,10 +1,11 @@
-#include "../include/exchange/order_book.hpp"
+#include <exchange/order_book.hpp>
 
 OrderBook::OrderBook() {
 
 }
 
-void OrderBook::add_order(Order od) {
+void OrderBook::add_order(const Order& od)
+{
     if (od.side == Side::BUY) {
         auto [it, inserted] = bp_mp.try_emplace(od.price);
         it->second.push_back(od);
@@ -17,7 +18,8 @@ void OrderBook::add_order(Order od) {
     }
 }
 
-bool OrderBook::remove_order(u64 od_id) {
+bool OrderBook::remove_order(u64 od_id)
+{
     auto it = id_mp.find(od_id);
     if (it == id_mp.end()) return false;
     auto list_it = it->second;
@@ -35,12 +37,14 @@ bool OrderBook::remove_order(u64 od_id) {
     return true;
 }
 
-u32 OrderBook::best_bid() const{
+u32 OrderBook::best_bid() const
+{
     if (bp_mp.empty()) return 0;
     return bp_mp.rbegin()->first;
 }
 
-u32 OrderBook::best_ask() const{
+u32 OrderBook::best_ask() const
+{
     if (sp_mp.empty()) return UINT32_MAX;
     return sp_mp.begin()->first;
 }
