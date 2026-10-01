@@ -2,6 +2,7 @@
 
 #include "order_book.hpp"
 #include "trade.hpp"
+
 #include <unordered_map>
 #include <list>
 #include <map>
