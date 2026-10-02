@@ -1,10 +1,6 @@
 #include <exchange/matching_engine.hpp>
 
-MatchingEngine::MatchingEngine() {
-    book_ = OrderBook();
-    next_order_id = 1;
-    next_trade_id = 1;
-}
+MatchingEngine::MatchingEngine() : next_order_id_(1), next_trade_id_(1) {}
 
 const OrderBook& MatchingEngine::book() const
 {
@@ -14,7 +10,7 @@ const OrderBook& MatchingEngine::book() const
 SubmitResult MatchingEngine::submit_order(Order od)
 {
     SubmitResult sr;
-    od.order_id = sr.order_id = next_order_id++;
+    od.order_id = sr.order_id = next_order_id_++;
     sr.remaining_quantity = od.quantity;
 
     if (od.side == Side::BUY) {
@@ -22,7 +18,7 @@ SubmitResult MatchingEngine::submit_order(Order od)
             Order& best_ask_order = book_.best_ask_order();
 
             Trade t;
-            t.trade_id = next_trade_id++;
+            t.trade_id = next_trade_id_++;
             t.buy_id = od.order_id;
             t.sell_id = best_ask_order.order_id;
             t.price = best_ask_order.price;
@@ -43,7 +39,7 @@ SubmitResult MatchingEngine::submit_order(Order od)
             Order& best_bid_order = book_.best_bid_order();
             
             Trade t;
-            t.trade_id = next_trade_id++;
+            t.trade_id = next_trade_id_++;
             t.buy_id = best_bid_order.order_id;
             t.sell_id = od.order_id;
             t.price = best_bid_order.price;

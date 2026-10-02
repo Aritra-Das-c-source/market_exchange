@@ -57,22 +57,31 @@ Command parse_command(const std::string& line)
 
     if (command == "buy") {
         od.side = Side::BUY;
-        if (!(iss >> od.price >> od.quantity)) return {CommandType::UNKNOWN, od};
-        if (od.price == 0 || od.quantity == 0 || iss >> extra) return {CommandType::UNKNOWN, od};
+        i64 price, quantity;
+        if (!(iss >> price >> quantity)) return {CommandType::UNKNOWN, od};
+        if (price <= 0 ||  price >= UINT32_MAX || quantity <= 0 || quantity >= UINT32_MAX || iss >> extra) return {CommandType::UNKNOWN, od};
+        od.price = price;
+        od.quantity = quantity;
 
         return {CommandType::ADD, od};
     }
 
     else if (command == "sell") {
         od.side = Side::SELL;
-        if (!(iss >> od.price >> od.quantity)) return {CommandType::UNKNOWN, od};
-        if (od.price == 0 || od.quantity == 0 || iss >> extra) return {CommandType::UNKNOWN, od};
+        i64 price, quantity;
+        if (!(iss >> price >> quantity)) return {CommandType::UNKNOWN, od};
+        if (price <= 0 ||  price >= UINT32_MAX || quantity <= 0 || quantity >= UINT32_MAX || iss >> extra) return {CommandType::UNKNOWN, od};
+        od.price = price;
+        od.quantity = quantity;
 
         return {CommandType::ADD, od};
     }
 
     else if (command == "cancel") {
-        if (!(iss >> od.order_id) || iss >> extra) return {CommandType::UNKNOWN, od};
+        i64 id;
+        if (!(iss >> id) || iss >> extra) return {CommandType::UNKNOWN, od};
+        if (id < 0 || id > UINT64_MAX) return {CommandType::UNKNOWN, od};
+        od.order_id = id;
         return {CommandType::CANCEL, od};
     }
 

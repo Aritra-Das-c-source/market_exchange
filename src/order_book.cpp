@@ -1,8 +1,6 @@
 #include <exchange/order_book.hpp>
 
-OrderBook::OrderBook() {
-
-}
+OrderBook::OrderBook() = default;
 
 void OrderBook::add_order(const Order& od)
 {

@@ -23,3 +23,15 @@ add_executable(${CLI_EXE_NAME}
 )
 
 target_link_libraries(${CLI_EXE_NAME} PRIVATE ${EXCHANGE_LIB_NAME})
+
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.15.2
+)
+
+FetchContent_MakeAvailable(googletest)
+
+add_subdirectory(test)

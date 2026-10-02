@@ -3,12 +3,6 @@
 #include "order_book.hpp"
 #include "trade.hpp"
 
-#include <unordered_map>
-#include <list>
-#include <map>
-#include <vector>
-#include <algorithm>
-
 struct SubmitResult {
     u64 order_id;
     u32 remaining_quantity;
@@ -25,7 +19,7 @@ public:
     bool cancel_order(u64 od_id);
 
 private:
-    u64 next_order_id;
-    u64 next_trade_id;
+    u64 next_order_id_;
+    u64 next_trade_id_;
     OrderBook book_;
 };
