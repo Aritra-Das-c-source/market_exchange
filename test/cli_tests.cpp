@@ -7,9 +7,9 @@ TEST(CliParserTest, ParsesBuy)
     const Command cmd = parse_command("buy 100 25");
 
     EXPECT_EQ(cmd.type, CommandType::ADD);
-    EXPECT_EQ(cmd.order.side, Side::BUY);
-    EXPECT_EQ(cmd.order.price, 100U);
-    EXPECT_EQ(cmd.order.quantity, 25U);
+    EXPECT_EQ(cmd.in.OEvent.side, Side::BUY);
+    EXPECT_EQ(cmd.in.OEvent.price, 100U);
+    EXPECT_EQ(cmd.in.OEvent.quantity, 25U);
 }
 
 TEST(CliParserTest, ParsesSell)
@@ -17,9 +17,9 @@ TEST(CliParserTest, ParsesSell)
     const Command cmd = parse_command("sell 101 30");
 
     EXPECT_EQ(cmd.type, CommandType::ADD);
-    EXPECT_EQ(cmd.order.side, Side::SELL);
-    EXPECT_EQ(cmd.order.price, 101U);
-    EXPECT_EQ(cmd.order.quantity, 30U);
+    EXPECT_EQ(cmd.in.OEvent.side, Side::SELL);
+    EXPECT_EQ(cmd.in.OEvent.price, 101U);
+    EXPECT_EQ(cmd.in.OEvent.quantity, 30U);
 }
 
 TEST(CliParserTest, ParsesCancel)
@@ -27,7 +27,7 @@ TEST(CliParserTest, ParsesCancel)
     const Command cmd = parse_command("cancel 42");
 
     EXPECT_EQ(cmd.type, CommandType::CANCEL);
-    EXPECT_EQ(cmd.order.order_id, 42U);
+    EXPECT_EQ(cmd.in.XEvent.order_id, 42U);
 }
 
 TEST(CliParserTest, ParsesBook)
@@ -114,9 +114,9 @@ TEST(CliParserTest, AcceptsLeadingAndTrailingWhitespace)
     const Command cmd = parse_command("   buy 100 10   ");
 
     EXPECT_EQ(cmd.type, CommandType::ADD);
-    EXPECT_EQ(cmd.order.side, Side::BUY);
-    EXPECT_EQ(cmd.order.price, 100U);
-    EXPECT_EQ(cmd.order.quantity, 10U);
+    EXPECT_EQ(cmd.in.OEvent.side, Side::BUY);
+    EXPECT_EQ(cmd.in.OEvent.price, 100U);
+    EXPECT_EQ(cmd.in.OEvent.quantity, 10U);
 }
 
 TEST(CliParserTest, RejectsNegativeBuyPrice)
